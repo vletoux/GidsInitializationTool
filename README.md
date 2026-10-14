@@ -6,7 +6,7 @@ Initializes a smart card where the [GIDS applet](https://github.com/vletoux/Gids
 
 ## Download
 
-`InitializeGids.exe` for x86, x64 and ARM64 is in the [releases](https://github.com/vletoux/GidsInitializationTool/releases). It is a single native executable (about 70 KB), with no installation.
+`InitializeGids.exe` for x86, x64 and ARM64 is in the [releases](https://github.com/vletoux/GidsInitializationTool/releases), signed by My Smart Logon SAS. It is a single native executable (about 70 KB), with no installation.
 
 ## Usage
 

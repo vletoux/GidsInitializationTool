@@ -457,7 +457,7 @@ static VOID OnInitializeCard(__in HWND hDlg)
 		SetCursor(hOldCursor);
 		if (fSuccess)
 		{
-			MessageBoxW(hDlg, L"The card has been initialized.\n\nIt can now receive certificates : enrollment, import of a PFX file or OpenSC.", HEADER_TITLE, MB_ICONINFORMATION);
+			MessageBoxW(hDlg, L"The card has been initialized.\n\nIt can now receive certificates: enrollment, import of a PFX file or OpenSC.", HEADER_TITLE, MB_ICONINFORMATION);
 			SetDlgItemTextW(hDlg, IDC_USERPIN, L"");
 			SetDlgItemTextW(hDlg, IDC_USERPIN2, L"");
 			SetRandomHex(GetDlgItem(hDlg, IDC_SERIAL), GIDS_SERIAL_SIZE);

@@ -1,0 +1,72 @@
+#include <windows.h>
+#include "resource.h"
+#include "version.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+IDI_MYSMARTLOGON        ICON                    "mysmartlogon.ico"
+IDB_BANNER              BITMAP                  "banner.bmp"
+
+IDD_MAIN DIALOGEX 0, 0, 320, 262
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
+CAPTION "Initialize GIDS card"
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    CONTROL         "", IDC_HEADER, "Static", SS_OWNERDRAW, 0, 0, 320, 32
+    CONTROL         "", IDC_SEPARATOR, "Static", SS_ETCHEDHORZ, 0, 32, 320, 1
+    LTEXT           "This tool initializes a card where the GIDS applet has just been installed: it sets the PIN, the admin key and creates the file system. It is done once per card.", IDC_STATIC, 10, 40, 300, 18
+    LTEXT           "Reader:", IDC_STATIC, 10, 66, 60, 8
+    COMBOBOX        IDC_READER, 75, 64, 180, 100, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Refresh", IDC_REFRESH, 260, 63, 50, 14
+    LTEXT           "", IDC_STATUS, 75, 80, 235, 8, SS_NOPREFIX
+
+    LTEXT           "The PIN is 4 to 16 characters long. Digits only if the card is used with a pinpad reader.", IDC_STATIC, 10, 98, 300, 8
+    LTEXT           "PIN:", IDC_STATIC, 10, 113, 60, 8
+    EDITTEXT        IDC_USERPIN, 75, 111, 110, 13, ES_PASSWORD | ES_AUTOHSCROLL
+    LTEXT           "Confirm the PIN:", IDC_STATIC, 10, 129, 60, 8
+    EDITTEXT        IDC_USERPIN2, 75, 127, 110, 13, ES_PASSWORD | ES_AUTOHSCROLL
+
+    LTEXT           "The admin key unblocks the card when the PIN is lost. Keep it in a safe place: without it, a blocked card has to be reinstalled.", IDC_STATIC, 10, 147, 300, 16
+    LTEXT           "Admin key:", IDC_STATIC, 10, 168, 60, 8
+    EDITTEXT        IDC_ADMINKEY, 75, 166, 235, 13, ES_AUTOHSCROLL | ES_UPPERCASE
+    PUSHBUTTON      "Generate", IDC_GENADMINKEY, 75, 182, 50, 14
+    PUSHBUTTON      "Copy", IDC_COPYADMINKEY, 129, 182, 50, 14
+    PUSHBUTTON      "Save to a file...", IDC_SAVEADMINKEY, 183, 182, 72, 14
+
+    LTEXT           "Serial number:", IDC_STATIC, 10, 208, 60, 8
+    EDITTEXT        IDC_SERIAL, 75, 206, 180, 13, ES_AUTOHSCROLL | ES_UPPERCASE
+    PUSHBUTTON      "Generate", IDC_GENSERIAL, 260, 205, 50, 14
+
+    LTEXT           "", IDC_COPYRIGHT, 10, 243, 150, 8, SS_NOPREFIX
+    DEFPUSHBUTTON   "Initialize card", IDOK, 195, 239, 60, 15
+    PUSHBUTTON      "Close", IDCANCEL, 260, 239, 50, 15
+END
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION VER_FILE_VERSION
+ PRODUCTVERSION VER_PRODUCT_VERSION
+ FILEFLAGSMASK 0x3fL
+ FILEFLAGS 0x0L
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_APP
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "MySmartLogon"
+            VALUE "FileDescription", "GIDS Initialization Tool"
+            VALUE "FileVersion", VER_FILE_VERSION_STR
+            VALUE "InternalName", "InitializeGids"
+            VALUE "LegalCopyright", VER_LEGAL_COPYRIGHT_STR
+            VALUE "OriginalFilename", "InitializeGids.exe"
+            VALUE "ProductName", "GIDS Initialization Tool"
+            VALUE "ProductVersion", VER_PRODUCT_VERSION_STR
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END

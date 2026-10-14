@@ -1,0 +1,42 @@
+name: build
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # git describe for the version
+
+      - uses: microsoft/setup-msbuild@v2
+
+      - name: Build
+        shell: pwsh
+        run: |
+          foreach ($platform in 'x86', 'x64', 'ARM64') {
+            msbuild GidsInitializationTool.sln /m /p:Configuration=Release /p:Platform=$platform
+            if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          }
+          New-Item -ItemType Directory dist | Out-Null
+          Copy-Item bin\Win32\Release\InitializeGids.exe dist\InitializeGids-x86.exe
+          Copy-Item bin\x64\Release\InitializeGids.exe dist\InitializeGids-x64.exe
+          Copy-Item bin\ARM64\Release\InitializeGids.exe dist\InitializeGids-arm64.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: InitializeGids
+          path: dist/*.exe
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create ${{ github.ref_name }} dist/*.exe --draft --title "${{ github.ref_name }}" --generate-notes
